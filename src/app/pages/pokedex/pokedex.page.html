@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar id="header_title">
+    <ion-card-title>Pokedex</ion-card-title>
+    <p>Busca un Pokemon por su nombre o utiliza su número de registro Pokemon</p>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar [debounce]="1000" (ionChange)="onChangeSearch($event)" animated="true" placeholder="Buscar" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-card *ngFor="let pokemon of pokemonList" class="ion-no-padding ion-no-margin" [routerLink]="pokemon.id" mode="ios">
+      <ion-card-content>
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="pokemon.image"></ion-img>
+          </ion-thumbnail>
+          <div>
+            <h1><strong>{{pokemon.name}}</strong></h1>
+            <ion-card-subtitle>{{pokemon.id}}</ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="10%" position="bottom" (ionInfinite)="loadPokemons(true, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
